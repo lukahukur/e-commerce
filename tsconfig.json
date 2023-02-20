@@ -16,7 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "(⁠⌐⁠■⁠-⁠■⁠)/*": ["./src/*"] // my sense of humor
+      "UwU/*": ["./src/*"] // my sense of humor
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
