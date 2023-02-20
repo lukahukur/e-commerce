@@ -4,13 +4,12 @@ import { FC } from 'react'
 import { ProductType } from 'UwU/types/products.types'
 import { BsStar } from 'react-icons/bs'
 const Card: FC<{ product: ProductType }> = ({ product }) => (
-  <Link
+  <div
     className="flex flex-col justify-between items-center w-80 h-96 
                overflow-hidden rouned-sm bg-white 
                rounded-xl font-OpenSans
                shadow-2xl shadow-slate-400 text-slate-800
                "
-    href={'/products/' + product.id}
   >
     <div
       className="flex justify-center items-center
@@ -25,9 +24,11 @@ const Card: FC<{ product: ProductType }> = ({ product }) => (
       />
     </div>
     <div className="bg-indigo-50 flex flex-col justify-between w-full p-3 text-sm">
-      <h2 className="font-OpenSansBold  text-base">
-        {product.title}
-      </h2>
+      <Link href={'/products/' + product.id}>
+        <h2 className="font-OpenSansBold  text-base hover:text-indigo-600">
+          {product.title}
+        </h2>
+      </Link>
       <span className="text-lg mt-2  justify-between flex items-center">
         <span>{product.price} $ </span>
         <span className="flex items-center w-12 justify-between font-OpenSansBold ">
@@ -37,13 +38,14 @@ const Card: FC<{ product: ProductType }> = ({ product }) => (
       </span>
     </div>
     <div
+      style={{ minHeight: '4rem' }}
       className="bg-indigo-700 w-full font-Montserrat
-                     text-slate-50 h-28 flex 
+                     text-slate-50  flex 
                      justify-center items-center"
     >
       BUY
     </div>
-  </Link>
+  </div>
 )
 
 export default Card
