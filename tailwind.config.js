@@ -6,6 +6,7 @@ module.exports = {
       fontFamily: {
         OpenSans: 'Open Sans',
         OpenSansBold: 'OpenSansBold',
+        Montserrat: '"Montserrat", sans-serif',
       },
       screens: {
         xs: '428px',

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
 @font-face {
   font-family: OpenSansBold;
   src: url('../../fonts/OpenSans-Bold.ttf');
@@ -12,5 +14,5 @@
 }
 
 body {
-  @apply bg-neutral-100;
+  @apply bg-indigo-50;
 }
