@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: OpenSansBold;
+  src: url('../../fonts/OpenSans-Bold.ttf');
+}
+@font-face {
+  font-family: OpenSansRegular;
+  src: url('../../fonts/OpenSans-Regular.ttf');
+}
+
+body {
+  @apply bg-neutral-100;
+}
