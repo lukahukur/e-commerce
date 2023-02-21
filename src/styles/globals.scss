@@ -4,6 +4,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
+@layer base {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+}
+
 @font-face {
   font-family: OpenSansBold;
   src: url('../../fonts/OpenSans-Bold.ttf');

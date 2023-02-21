@@ -1,17 +1,20 @@
-import { NextPage } from 'next'
+import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import { useContext } from 'react'
 import { useQuery } from 'react-query'
-import MainBody from 'UwU/components/Main'
 import { CallApiGet } from 'UwU/components/Main/main.service'
 import ShopBody from 'UwU/components/Shop/shop'
-import { ProductType } from 'UwU/types/products.types'
+import { Categories, ProductType } from 'UwU/types/products.types'
 
-const Shop: NextPage<{ prods: ProductType[] }> = ({ prods }) => {
+const ShopCategory: NextPage<{
+  prods: ProductType[]
+  category: Categories
+}> = ({ prods, category }) => {
   const { data } = useQuery<ProductType[], any>(
     'products',
     () =>
-      CallApiGet<ProductType[]>('https://fakestoreapi.com/products'),
+      CallApiGet<ProductType[]>(
+        'https://fakestoreapi.com/products/category' + category,
+      ),
     { initialData: prods },
   )
 
@@ -34,11 +37,20 @@ const Shop: NextPage<{ prods: ProductType[] }> = ({ prods }) => {
   )
 }
 
-export default Shop
+export default ShopCategory
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async ({
+  resolvedUrl,
+}) => {
+  let category = resolvedUrl.slice(15)
+
+  if (Number(category) || !Categories[category as any])
+    return {
+      notFound: true,
+    }
+  console.log(category)
   const prods = await CallApiGet<ProductType[]>(
-    'https://fakestoreapi.com/products',
+    'https://fakestoreapi.com/products/category/' + category,
   )
   return { props: { prods } }
 }

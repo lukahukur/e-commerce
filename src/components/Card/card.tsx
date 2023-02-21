@@ -17,21 +17,23 @@ const Card: FC<{ product: ProductType }> = ({ product }) => (
                  w-full"
     >
       <Image
-        width={120}
+        width={110}
         height={150}
         src={product.image}
+        priority={true}
         alt="product"
+        className="w-auto h-auto max-h-48"
       />
     </div>
     <div className="bg-indigo-50 flex flex-col justify-between w-full p-3 text-sm">
       <Link href={'/products/' + product.id}>
-        <h2 className="font-OpenSansBold  text-base hover:text-indigo-600">
+        <h2 className="font-OpenSans  text-base hover:text-indigo-600">
           {product.title}
         </h2>
       </Link>
-      <span className="text-lg mt-2  justify-between flex items-center">
+      <span className="text-lg mt-2  justify-between flex items-center font-OpenSansBold">
         <span>{product.price} $ </span>
-        <span className="flex items-center w-12 justify-between font-OpenSansBold ">
+        <span className="flex items-center w-12 justify-between ">
           {product.rating.rate}
           <BsStar />
         </span>
