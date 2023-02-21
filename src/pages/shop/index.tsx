@@ -7,7 +7,10 @@ import { CallApiGet } from 'UwU/components/Main/main.service'
 import ShopBody from 'UwU/components/Shop/shop'
 import { ProductType } from 'UwU/types/products.types'
 
-const Shop: NextPage<{ prods: ProductType[] }> = ({ prods }) => {
+const Shop: NextPage<{ prods: ProductType[]; categories: any }> = ({
+  prods,
+  categories,
+}) => {
   const { data } = useQuery<ProductType[], any>(
     'products',
     () =>
@@ -37,8 +40,10 @@ const Shop: NextPage<{ prods: ProductType[] }> = ({ prods }) => {
 export default Shop
 
 export async function getStaticProps() {
-  const prods = await CallApiGet<ProductType[]>(
-    'https://fakestoreapi.com/products',
-  )
-  return { props: { prods } }
+  const res = await Promise.all([
+    CallApiGet<ProductType[]>('https://fakestoreapi.com/products'),
+    CallApiGet<any>('https://fakestoreapi.com/products/categories'),
+  ])
+
+  return { props: { prods: res[0], categories: res[1] } }
 }

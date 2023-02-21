@@ -3,7 +3,7 @@ import { ProductType } from 'UwU/types/products.types'
 import Card from '../Card'
 import SidebarShop from '../SidebarShop'
 import { BsSortDownAlt, BsSortDown } from 'react-icons/bs'
-import { Sort } from '../Options'
+import { Sort } from '../OptionsShop'
 
 const ShopBody: FC<{ products: ProductType[] }> = ({
   products: prod,
