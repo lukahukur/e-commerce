@@ -1,18 +1,19 @@
-import { FC, useContext } from 'react'
-import { typedUseSelector } from 'UwU/store'
-import { Categories as __c } from 'UwU/types/products.types'
+import { FC, useRef, useEffect } from 'react'
+import { typedDispatch } from 'UwU/store'
+import { setCategories } from 'UwU/store/shop.slice'
+import styles from './styles.module.scss'
 
 
-let categories: string[] = []
+const SidebarShop: FC<{ categories: string[] }> = ({
+  categories,
+}) => {
+  const dispatch = typedDispatch()
+  const selectedCategories = useRef<string[]>([])
 
-for (let key in __c) {
-  if (Number(key) || (key as string) == '0') continue
-  categories.push(key)
-}
 
-export { categories }
-
-const SidebarShop = () => {
+  useEffect(() => {
+    selectedCategories.current = categories
+  }, [categories])
 
   return (
     <aside
@@ -30,7 +31,10 @@ const SidebarShop = () => {
                   type="checkbox"
                   name={'category'}
                   defaultChecked
-                  onChange={(e) => {}}
+                  onChange={(ev) => {
+                    if (ev.target.checked) {
+                    }
+                  }}
                   className="peer relative appearance-none w-5 h-5
                              border rounded-sm focus:outline-none
                              checked:bg-indigo-100 hover:border-slate-400

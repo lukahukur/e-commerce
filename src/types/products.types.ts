@@ -10,14 +10,3 @@ export type ProductType = {
     count: number
   }
 }
-export enum Categories {
-  'electronics',
-  'jewelery',
-  "men's clothing",
-  "women's clothing",
-}
-
-export type InitialStateType = {
-  sort: 'lowToHigh' | 'highToLow' | 'none'
-  categories: { [key: string]: boolean }
-}

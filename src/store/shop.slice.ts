@@ -1,31 +1,27 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type sortType = 'asc' | 'desc' | 'default'
+export type Sort = 'asc' | 'desc' | 'default'
 
-export type initialStateType = {
-    categories: {
-        name:string,
-        selected:boolean
-    }[] | null,
-    sort:sortType
+type initialStateType = {
+  sort: Sort
+  categories: string[]
 }
 
-export const shopSlice= createSlice({
-    name:'shopSlice',
-    initialState:{
-        categories:null,
-        sort:'default'
-    } as initialStateType,
-    reducers:{
-        setCagories(state,{payload}:PayloadAction<{
-            name:string,
-            selected:boolean
-        }[]>){
-            state.categories = payload
-        },
-        sort(state,{payload}:PayloadAction<sortType>){
-            state.sort = payload
-        }
-    }
+export const shopSlice = createSlice({
+  name: 'shopSlice',
+  initialState: {
+    categories: [],
+    sort: 'default',
+  } as initialStateType,
+  reducers: {
+    setCategories(store, { payload }: PayloadAction<string[]>) {
+      store.categories = payload
+    },
+    sort(store, { payload }: PayloadAction<Sort>) {
+      store.sort = payload
+    },
+  },
 })
-export const {setCagories,sort} = shopSlice.actions
+
+export const { setCategories, sort } = shopSlice.actions
+

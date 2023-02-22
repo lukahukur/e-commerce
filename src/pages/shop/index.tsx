@@ -1,28 +1,16 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useContext, useEffect } from 'react'
 import { useQuery } from 'react-query'
-import MainBody from 'UwU/components/Main'
-import { CallApiGet } from 'UwU/components/Main/main.service'
-import ShopBody from 'UwU/components/Shop/shop'
-import { typedUseSelector } from 'UwU/store'
-import { setCagories } from 'UwU/store/shop.slice'
+import { Sort } from 'UwU/components/OptionsShop'
+import ItemList from 'UwU/components/itemListShop/itemList'
+import SidebarShop from 'UwU/components/SidebarShop'
 import { ProductType } from 'UwU/types/products.types'
+import { CallApiGet } from 'UwU/components/Main/main.service'
 
-const Shop: NextPage<{ prods: ProductType[],categories:string[] }> = ({ prods,categories }) => {
-  const categoriesS = typedUseSelector(s => s.shopSlice)
-  useEffect(()=>{
-    setCagories([{name:'asdfasdf',selected:true}])
-  },[])
-  useEffect(()=>{
-      console.log(categoriesS)
-  },[categoriesS])
-  const { data } = useQuery<ProductType[], any>(
-    'products',
-    () =>
-      CallApiGet<ProductType[]>('https://fakestoreapi.com/products'),
-    { initialData: prods },
-  )
+const Shop: NextPage<{
+  prods: ProductType[]
+  categories: string[]
+}> = ({ prods, categories }) => {
 
   return (
     <>
@@ -38,7 +26,24 @@ const Shop: NextPage<{ prods: ProductType[],categories:string[] }> = ({ prods,ca
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ShopBody products={data!} />
+      <main className="justify-start flex w-screen xs:w-full p-3 transition-all">
+        <span className="flex mr-4 min-w-[250px] w-64 z-10">
+          <span className="fixed">
+            <SidebarShop categories={categories} />
+          </span>
+        </span>
+        <section className="flex justify-center">
+          <span>
+            <Sort />
+          </span>
+          <div
+            className="grid 2xl:grid-cols-4 gap-y-10 gap-x-5 w-fit
+                        xl:grid-cols-3 lg:grid-cols-2"
+          >
+            <ItemList products={prods} />
+          </div>
+        </section>
+      </main>
     </>
   )
 }
@@ -46,14 +51,12 @@ const Shop: NextPage<{ prods: ProductType[],categories:string[] }> = ({ prods,ca
 export default Shop
 
 export async function getStaticProps() {
-  let res =await Promise.all([
-    CallApiGet<ProductType[]>(
-      'https://fakestoreapi.com/products',
-    ),
-    CallApiGet<ProductType[]>(
-      'https://fakestoreapi.com/products/categories',
-    )
+
+  const res = await Promise.all([
+    CallApiGet<ProductType[]>('https://fakestoreapi.com/products'),
+    CallApiGet<any>('https://fakestoreapi.com/products/categories'),
   ])
 
-  return { props: { prods:res[0] ,categories:res[1]} }
+  return { props: { prods: res[0], categories: res[1] } }
+
 }
