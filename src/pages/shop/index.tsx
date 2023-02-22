@@ -1,13 +1,22 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import MainBody from 'UwU/components/Main'
 import { CallApiGet } from 'UwU/components/Main/main.service'
 import ShopBody from 'UwU/components/Shop/shop'
+import { typedUseSelector } from 'UwU/store'
+import { setCagories } from 'UwU/store/shop.slice'
 import { ProductType } from 'UwU/types/products.types'
 
-const Shop: NextPage<{ prods: ProductType[] }> = ({ prods }) => {
+const Shop: NextPage<{ prods: ProductType[],categories:string[] }> = ({ prods,categories }) => {
+  const categoriesS = typedUseSelector(s => s.shopSlice)
+  useEffect(()=>{
+    setCagories([{name:'asdfasdf',selected:true}])
+  },[])
+  useEffect(()=>{
+      console.log(categoriesS)
+  },[categoriesS])
   const { data } = useQuery<ProductType[], any>(
     'products',
     () =>
@@ -37,8 +46,14 @@ const Shop: NextPage<{ prods: ProductType[] }> = ({ prods }) => {
 export default Shop
 
 export async function getStaticProps() {
-  const prods = await CallApiGet<ProductType[]>(
-    'https://fakestoreapi.com/products',
-  )
-  return { props: { prods } }
+  let res =await Promise.all([
+    CallApiGet<ProductType[]>(
+      'https://fakestoreapi.com/products',
+    ),
+    CallApiGet<ProductType[]>(
+      'https://fakestoreapi.com/products/categories',
+    )
+  ])
+
+  return { props: { prods:res[0] ,categories:res[1]} }
 }

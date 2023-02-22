@@ -1,6 +1,7 @@
 import { FC, useContext } from 'react'
+import { typedUseSelector } from 'UwU/store'
 import { Categories as __c } from 'UwU/types/products.types'
-import styles from './styles.module.scss'
+
 
 let categories: string[] = []
 
@@ -12,6 +13,7 @@ for (let key in __c) {
 export { categories }
 
 const SidebarShop = () => {
+
   return (
     <aside
       className="bg-white w-64 p-3 h-fit

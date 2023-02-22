@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        OpenSans: 'Open Sans',
+        OpenSans: 'OpenSansRegular',
         OpenSansBold: 'OpenSansBold',
         Montserrat: '"Montserrat", sans-serif',
       },
