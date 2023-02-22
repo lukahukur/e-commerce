@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type Categories = { name: string; selected: boolean }
 export type Sort = 'asc' | 'desc' | 'default'
 
 type initialStateType = {
   sort: Sort
-  categories: Categories[]
+  categories: string[]
 }
 
 export const shopSlice = createSlice({
@@ -15,7 +14,7 @@ export const shopSlice = createSlice({
     sort: 'default',
   } as initialStateType,
   reducers: {
-    setCategories(store, { payload }: PayloadAction<Categories[]>) {
+    setCategories(store, { payload }: PayloadAction<string[]>) {
       store.categories = payload
     },
     sort(store, { payload }: PayloadAction<Sort>) {

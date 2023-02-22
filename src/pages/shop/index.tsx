@@ -1,11 +1,11 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useQuery } from 'react-query'
-import { CallApiGet } from 'UwU/components/Main/main.service'
 import { Sort } from 'UwU/components/OptionsShop'
 import ItemList from 'UwU/components/itemListShop/itemList'
 import SidebarShop from 'UwU/components/SidebarShop'
 import { ProductType } from 'UwU/types/products.types'
+import { CallApiGet } from 'UwU/components/Main/main.service'
 
 const Shop: NextPage<{
   prods: ProductType[]

@@ -2,7 +2,7 @@ import { FC, useEffect, useMemo } from 'react'
 import { ProductType } from 'UwU/types/products.types'
 import Card from '../Card'
 
-const itemList: FC<{
+const ItemList: FC<{
   products: ProductType[]
 }> = ({ products }) => {
   return (
@@ -14,4 +14,4 @@ const itemList: FC<{
   )
 }
 
-export default itemList
+export default ItemList

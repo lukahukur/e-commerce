@@ -22,4 +22,4 @@ export const typedDispatch = useDispatch<AppDispatch>
 export const typedUseSelector: TypedUseSelectorHook<AppState> =
   useSelector
 
-export const wrapper = createWrapper<AppStore>(store, { debug: true })
+export const wrapper = createWrapper<AppStore>(store)
