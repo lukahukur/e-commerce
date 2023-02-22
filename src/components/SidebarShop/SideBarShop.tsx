@@ -12,9 +12,11 @@ const SidebarShop: FC<{ categories: string[] }> = ({
 
 
   useEffect(() => {
+   let a = setInterval(()=>console.log(selectedCategories),1000)
     selectedCategories.current = categories
+    return ()=> clearInterval(a)
   }, [categories])
-
+  
   return (
     <aside
       className="bg-white w-64 p-3 h-fit
@@ -32,8 +34,10 @@ const SidebarShop: FC<{ categories: string[] }> = ({
                   name={'category'}
                   defaultChecked
                   onChange={(ev) => {
-                    if (ev.target.checked) {
+                    if (!ev.target.checked) {
+                      return selectedCategories.current = selectedCategories.current.filter(elem => elem!== e)
                     }
+                    selectedCategories.current.push(e)
                   }}
                   className="peer relative appearance-none w-5 h-5
                              border rounded-sm focus:outline-none
