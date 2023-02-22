@@ -1,23 +1,16 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useContext } from 'react'
 import { useQuery } from 'react-query'
-import MainBody from 'UwU/components/Main'
 import { CallApiGet } from 'UwU/components/Main/main.service'
-import ShopBody from 'UwU/components/Shop/shop'
+import { Sort } from 'UwU/components/OptionsShop'
+import ItemList from 'UwU/components/itemListShop/itemList'
+import SidebarShop from 'UwU/components/SidebarShop'
 import { ProductType } from 'UwU/types/products.types'
 
-const Shop: NextPage<{ prods: ProductType[]; categories: any }> = ({
-  prods,
-  categories,
-}) => {
-  const { data } = useQuery<ProductType[], any>(
-    'products',
-    () =>
-      CallApiGet<ProductType[]>('https://fakestoreapi.com/products'),
-    { initialData: prods },
-  )
-
+const Shop: NextPage<{
+  prods: ProductType[]
+  categories: string[]
+}> = ({ prods, categories }) => {
   return (
     <>
       <Head>
@@ -32,7 +25,24 @@ const Shop: NextPage<{ prods: ProductType[]; categories: any }> = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ShopBody products={data!} />
+      <main className="justify-start flex w-screen xs:w-full p-3 transition-all">
+        <span className="flex mr-4 min-w-[250px] w-64 z-10">
+          <span className="fixed">
+            <SidebarShop categories={categories} />
+          </span>
+        </span>
+        <section className="flex justify-center">
+          <span>
+            <Sort />
+          </span>
+          <div
+            className="grid 2xl:grid-cols-4 gap-y-10 gap-x-5 w-fit
+                        xl:grid-cols-3 lg:grid-cols-2"
+          >
+            <ItemList products={prods} />
+          </div>
+        </section>
+      </main>
     </>
   )
 }

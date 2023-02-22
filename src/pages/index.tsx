@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { useQuery } from 'react-query'
 import MainBody from 'UwU/components/Main'
 import { CallApiGet } from 'UwU/components/Main/main.service'
-import { Categories, ProductType } from 'UwU/types/products.types'
+import { ProductType } from 'UwU/types/products.types'
 
 const Home: NextPage<{ prods: ProductType[] }> = ({ prods }) => {
   const { data, isSuccess, isLoading } = useQuery<ProductType[], any>(

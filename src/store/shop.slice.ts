@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type C = { name: string; selected: boolean }[]
-type S = 'asc' | 'desc' | 'default'
+export type Categories = { name: string; selected: boolean }
+export type Sort = 'asc' | 'desc' | 'default'
+
 type initialStateType = {
-  sort: S
-  categories: C
+  sort: Sort
+  categories: Categories[]
 }
 
 export const shopSlice = createSlice({
@@ -14,11 +15,13 @@ export const shopSlice = createSlice({
     sort: 'default',
   } as initialStateType,
   reducers: {
-    setCategories(store, { payload }: PayloadAction<C>) {
+    setCategories(store, { payload }: PayloadAction<Categories[]>) {
       store.categories = payload
     },
-    sort(store, { payload }: PayloadAction<S>) {
+    sort(store, { payload }: PayloadAction<Sort>) {
       store.sort = payload
     },
   },
 })
+
+export const { setCategories, sort } = shopSlice.actions
