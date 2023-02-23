@@ -1,22 +1,59 @@
-import { FC, useRef, useEffect } from 'react'
+import { FC, useRef, useEffect, useCallback, useMemo } from 'react'
 import { typedDispatch } from 'UwU/store'
 import { setCategories } from 'UwU/store/shop.slice'
 import styles from './styles.module.scss'
 
-
+let selectedCategories: { [key: string]: boolean } = {}
 const SidebarShop: FC<{ categories: string[] }> = ({
   categories,
 }) => {
   const dispatch = typedDispatch()
-  const selectedCategories = useRef<string[]>([])
 
-
-  useEffect(() => {
-   let a = setInterval(()=>console.log(selectedCategories),1000)
-    selectedCategories.current = categories
-    return ()=> clearInterval(a)
+  let memoized = useMemo(() => {
+    categories.forEach((e) => (selectedCategories[e] = true))
+    dispatch(setCategories({ ...selectedCategories }))
+    return true
   }, [categories])
-  
+
+  let mapCategories = useMemo(
+    () =>
+      categories.map((elem, i) => (
+        <li className="flex items-center ml-2" key={i}>
+          <input
+            type="checkbox"
+            name={'category'}
+            defaultChecked
+            onChange={(e) => {
+              if (!e.target.checked)
+                selectedCategories = {
+                  ...selectedCategories,
+                  [elem]: false,
+                }
+              else
+                selectedCategories = {
+                  ...selectedCategories,
+                  [elem]: true,
+                }
+
+              dispatch(setCategories(selectedCategories))
+            }}
+            className="peer relative appearance-none w-5 h-5
+                   border rounded-sm focus:outline-none
+                   checked:bg-indigo-100 hover:border-slate-400
+                   
+                   after:w-full after:h-full after:absolute
+                   after:left-0 after:top-[1px] after:bg-no-repeat
+                   after:bg-center after:bg-[length:15px]
+                   checked:after:bg-[url('../../public/check.svg')]
+                   "
+          />
+          <label htmlFor="category" className="ml-2">
+            {elem}
+          </label>
+        </li>
+      )),
+    [],
+  )
   return (
     <aside
       className="bg-white w-64 p-3 h-fit
@@ -26,35 +63,7 @@ const SidebarShop: FC<{ categories: string[] }> = ({
       <span>
         <h2 className="font-OpenSansBold text-xl">Categories:</h2>
         <nav className="">
-          <ul>
-            {categories.map((e, i) => (
-              <li className="flex items-center ml-2" key={i}>
-                <input
-                  type="checkbox"
-                  name={'category'}
-                  defaultChecked
-                  onChange={(ev) => {
-                    if (!ev.target.checked) {
-                      return selectedCategories.current = selectedCategories.current.filter(elem => elem!== e)
-                    }
-                    selectedCategories.current.push(e)
-                  }}
-                  className="peer relative appearance-none w-5 h-5
-                             border rounded-sm focus:outline-none
-                             checked:bg-indigo-100 hover:border-slate-400
-                             
-                             after:w-full after:h-full after:absolute
-                             after:left-0 after:top-[1px] after:bg-no-repeat
-                             after:bg-center after:bg-[length:15px]
-                             checked:after:bg-[url('../../public/check.svg')]
-                             "
-                />
-                <label htmlFor="category" className="ml-2">
-                  {e}
-                </label>
-              </li>
-            ))}
-          </ul>
+          <ul>{mapCategories}</ul>
         </nav>
       </span>
       <span className="mt-4 flex flex-col">

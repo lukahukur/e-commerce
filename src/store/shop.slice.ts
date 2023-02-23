@@ -4,17 +4,20 @@ export type Sort = 'asc' | 'desc' | 'default'
 
 type initialStateType = {
   sort: Sort
-  categories: string[]
+  categories: { [key: string]: boolean }
 }
 
 export const shopSlice = createSlice({
   name: 'shopSlice',
   initialState: {
-    categories: [],
+    categories: {},
     sort: 'default',
   } as initialStateType,
   reducers: {
-    setCategories(store, { payload }: PayloadAction<string[]>) {
+    setCategories(
+      store,
+      { payload }: PayloadAction<{ [key: string]: boolean }>,
+    ) {
       store.categories = payload
     },
     sort(store, { payload }: PayloadAction<Sort>) {
@@ -24,4 +27,3 @@ export const shopSlice = createSlice({
 })
 
 export const { setCategories, sort } = shopSlice.actions
-
