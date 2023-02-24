@@ -10,14 +10,21 @@ const ItemList: FC<{
     (s) => s.shopSlice.categories,
   )
 
+  const priceRange = typedUseSelector((s) => s.shopSlice.priceRange)
+  console.log(priceRange)
   let render = useMemo(
     () =>
       products
         .filter((e) => selectedCategores[e.category])
+        .filter(
+          (e) =>
+            Number(e.price) >= priceRange[0] &&
+            Number(e.price) <= priceRange[1],
+        )
         .map((e, i) => {
           return <Card key={i} product={e} />
         }),
-    [selectedCategores],
+    [selectedCategores, priceRange],
   )
   return <>{render}</>
 }

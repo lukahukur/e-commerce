@@ -1,15 +1,16 @@
 import { FC, useRef, useEffect, useCallback, useMemo } from 'react'
 import { typedDispatch } from 'UwU/store'
-import { setCategories } from 'UwU/store/shop.slice'
+import { setCategories, setPriceRange } from 'UwU/store/shop.slice'
 import styles from './styles.module.scss'
 
 let selectedCategories: { [key: string]: boolean } = {}
+let priceRange: [number, number] = [0, Infinity]
 const SidebarShop: FC<{ categories: string[] }> = ({
   categories,
 }) => {
   const dispatch = typedDispatch()
 
-  let memoized = useMemo(() => {
+  let _ = useMemo(() => {
     categories.forEach((e) => (selectedCategories[e] = true))
     dispatch(setCategories({ ...selectedCategories }))
     return true
@@ -34,8 +35,6 @@ const SidebarShop: FC<{ categories: string[] }> = ({
                   ...selectedCategories,
                   [elem]: true,
                 }
-
-              dispatch(setCategories(selectedCategories))
             }}
             className="peer relative appearance-none w-5 h-5
                    border rounded-sm focus:outline-none
@@ -74,12 +73,18 @@ const SidebarShop: FC<{ categories: string[] }> = ({
             placeholder="From"
             className="border border-indigo-200 w-1/2 mr-4 p-1
                      focus:outline-indigo-500 focus:outline-1 rounded-md"
+            onChange={(e) =>
+              (priceRange[0] = Number(e.target.value) || 0)
+            }
           />
           <input
             type="number"
             placeholder="To"
             className="border border-indigo-200 w-1/2 mr-2 p-1
                      focus:outline-indigo-500 focus:outline-1 rounded-md"
+            onChange={(e) =>
+              (priceRange[1] = Number(e.target.value) || Infinity)
+            }
           />
         </div>
       </span>
@@ -87,6 +92,10 @@ const SidebarShop: FC<{ categories: string[] }> = ({
         <button
           className="font-Montserrat border 
                      w-1/2 py-1 rounded-lg bg-indigo-100 text-indigo-500 "
+          onClick={() => {
+            dispatch(setCategories(selectedCategories))
+            dispatch(setPriceRange([...priceRange]))
+          }}
         >
           Apply
         </button>
