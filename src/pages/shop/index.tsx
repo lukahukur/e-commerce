@@ -1,8 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useQuery } from 'react-query'
 import { Sort } from 'UwU/components/OptionsShop'
-import ItemList from 'UwU/components/itemListShop/itemList'
+import Products from 'UwU/components/itemListShop/products'
 import SidebarShop from 'UwU/components/SidebarShop'
 import { ProductType } from 'UwU/types/products.types'
 import { CallApiGet } from 'UwU/components/Main/main.service'
@@ -11,7 +10,6 @@ const Shop: NextPage<{
   prods: ProductType[]
   categories: string[]
 }> = ({ prods, categories }) => {
-
   return (
     <>
       <Head>
@@ -28,20 +26,15 @@ const Shop: NextPage<{
       </Head>
       <main className="justify-start flex w-screen xs:w-full p-3 transition-all">
         <span className="flex mr-4 min-w-[250px] w-64 z-10">
-          <span className="fixed">
+          <span className="fixed ">
             <SidebarShop categories={categories} />
           </span>
         </span>
-        <section className="flex justify-center">
-          <span>
+        <section className="flex flex-col justify-center  w-full">
+          <span className="py-2">
             <Sort />
           </span>
-          <div
-            className="grid 2xl:grid-cols-4 gap-y-10 gap-x-5 w-fit
-                        xl:grid-cols-3 lg:grid-cols-2"
-          >
-            <ItemList products={prods} />
-          </div>
+          <Products products={prods} />
         </section>
       </main>
     </>
@@ -51,12 +44,10 @@ const Shop: NextPage<{
 export default Shop
 
 export async function getStaticProps() {
-
   const res = await Promise.all([
     CallApiGet<ProductType[]>('https://fakestoreapi.com/products'),
     CallApiGet<any>('https://fakestoreapi.com/products/categories'),
   ])
 
   return { props: { prods: res[0], categories: res[1] } }
-
 }

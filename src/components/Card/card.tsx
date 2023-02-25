@@ -42,8 +42,8 @@ const Card: FC<{ product: ProductType }> = ({ product }) => (
     <div
       style={{ minHeight: '4rem' }}
       className="bg-indigo-700 w-full font-Montserrat
-                     text-slate-50  flex 
-                     justify-center items-center"
+                 text-slate-50  flex 
+                   justify-center items-center"
     >
       BUY
     </div>

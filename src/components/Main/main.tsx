@@ -6,7 +6,7 @@ const MainBody: FC<{ products: ProductType[] }> = ({
   products: prod,
 }) => {
   const products = prod.map((e, i) => {
-    return <Card product={e} />
+    return <Card key={i} product={e} />
   })
   return (
     <main className="border">
