@@ -5,7 +5,11 @@ import {
   BsGrid,
 } from 'react-icons/bs'
 import { typedDispatch, typedUseSelector } from 'UwU/store'
-import { setRenderType, sort } from 'UwU/store/shop.slice'
+import {
+  setRenderType,
+  showSortPopup,
+  sort,
+} from 'UwU/store/shop.slice'
 import { useEffect, useState } from 'react'
 
 export const Sort = () => {
@@ -24,7 +28,7 @@ export const Sort = () => {
 
   return (
     <>
-      <span className="flex justify-start items-center">
+      <span className="flex justify-start items-center -z-1">
         <span className="flex">
           <button
             onClick={() => dispatch(sort('desc'))}
@@ -37,6 +41,12 @@ export const Sort = () => {
             className="w-14 h-6 flex bg-white items-center justify-center z-50 shadow-sm rounded-lg mr-2"
           >
             <BsSortDown />
+          </button>
+          <button
+            onClick={() => dispatch(showSortPopup(true))}
+            className="w-14 h-6 sm:hidden flex bg-white items-center justify-center z-50 shadow-sm rounded-lg mr-2"
+          >
+            Sort
           </button>
         </span>
         <span>

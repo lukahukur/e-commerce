@@ -8,6 +8,7 @@ type initialStateType = {
   categories: { [key: string]: boolean }
   renderType: RenderType
   priceRange: [number, number]
+  showSortPopup: boolean
 }
 
 export const shopSlice = createSlice({
@@ -17,6 +18,7 @@ export const shopSlice = createSlice({
     sort: 'default',
     renderType: 'cards',
     priceRange: [0, Infinity],
+    showSortPopup: false,
   } as initialStateType,
   reducers: {
     setCategories(
@@ -37,8 +39,16 @@ export const shopSlice = createSlice({
     ) {
       store.priceRange = payload
     },
+    showSortPopup(store, { payload }: PayloadAction<boolean>) {
+      store.showSortPopup = payload
+    },
   },
 })
 
-export const { setCategories, sort, setPriceRange, setRenderType } =
-  shopSlice.actions
+export const {
+  setCategories,
+  sort,
+  setPriceRange,
+  setRenderType,
+  showSortPopup,
+} = shopSlice.actions

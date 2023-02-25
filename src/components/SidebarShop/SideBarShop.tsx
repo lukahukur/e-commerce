@@ -1,25 +1,35 @@
 import { FC, useRef, useEffect, useCallback, useMemo } from 'react'
 import { typedDispatch } from 'UwU/store'
-import { setCategories, setPriceRange } from 'UwU/store/shop.slice'
-import styles from './styles.module.scss'
+import {
+  setCategories,
+  setPriceRange,
+  showSortPopup,
+} from 'UwU/store/shop.slice'
 
+let fired = false
 let selectedCategories: { [key: string]: boolean } = {}
 let priceRange: [number, number] = [0, Infinity]
+
 const SidebarShop: FC<{ categories: string[] }> = ({
   categories,
 }) => {
   const dispatch = typedDispatch()
 
-  let _ = useMemo(() => {
-    categories.forEach((e) => (selectedCategories[e] = true))
+  useEffect(() => {
+    if (!fired)
+      categories.forEach((e) => (selectedCategories[e] = true))
+
     dispatch(setCategories({ ...selectedCategories }))
-    return true
+
+    return () => {
+      fired = true
+    }
   }, [categories])
 
   let mapCategories = useMemo(
     () =>
       categories.map((elem, i) => (
-        <li className="flex items-center ml-2" key={i}>
+        <li className="items-center ml-2" key={i}>
           <input
             type="checkbox"
             name={'category'}
@@ -36,9 +46,9 @@ const SidebarShop: FC<{ categories: string[] }> = ({
                   [elem]: true,
                 }
             }}
-            className="peer relative appearance-none w-5 h-5
+            className="peer relative appearance-none w-5 h-5 
                    border rounded-sm focus:outline-none
-                   checked:bg-indigo-100 hover:border-slate-400
+                 checked:bg-indigo-100 hover:border-slate-400
                    
                    after:w-full after:h-full after:absolute
                    after:left-0 after:top-[1px] after:bg-no-repeat
@@ -53,11 +63,12 @@ const SidebarShop: FC<{ categories: string[] }> = ({
       )),
     [],
   )
+
   return (
     <aside
-      className="bg-white w-64 p-3 h-fit
+      className="bg-white w-64 p-3 h-fit 
                    rounded-xl font-OpenSans
-                   shadow-2xl shadow-slate-400 text-slate-700"
+                   shadow-2xl shadow-slate-400 text-slate-700 z-50"
     >
       <span>
         <h2 className="font-OpenSansBold text-xl">Categories:</h2>
@@ -95,6 +106,7 @@ const SidebarShop: FC<{ categories: string[] }> = ({
           onClick={() => {
             dispatch(setCategories(selectedCategories))
             dispatch(setPriceRange([...priceRange]))
+            dispatch(showSortPopup(false))
           }}
         >
           Apply

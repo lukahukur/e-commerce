@@ -2,11 +2,11 @@ import { NextPage } from 'next'
 import { useLayoutEffect } from 'react'
 import Head from 'next/head'
 import { Sort } from 'UwU/components/OptionsShop'
-import Products from 'UwU/components/itemListShop/products'
+import Products from 'UwU/components/productListShop/products'
 import SidebarShop from 'UwU/components/SidebarShop'
 import { ProductType } from 'UwU/types/products.types'
 import { CallApiGet } from 'UwU/components/Main/main.service'
-import { typedDispatch } from 'UwU/store'
+import { typedDispatch, typedUseSelector } from 'UwU/store'
 import { setRenderType } from 'UwU/store/shop.slice'
 
 const Shop: NextPage<{
@@ -14,13 +14,16 @@ const Shop: NextPage<{
   categories: string[]
 }> = ({ prods, categories }) => {
   const dispatch = typedDispatch()
+  const showSortPopup = typedUseSelector(
+    (s) => s.shopSlice.showSortPopup,
+  )
 
   const handleResize = () => {
     if (window.innerWidth <= 1110) {
       dispatch(setRenderType('cards'))
     }
   }
-
+  console.log(showSortPopup)
   useLayoutEffect(() => {
     handleResize()
     window.addEventListener('resize', handleResize)
@@ -40,14 +43,23 @@ const Shop: NextPage<{
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="justify-start flex w-screen xs:w-full p-3 transition-all">
-        <span className="flex mr-4 min-w-[250px] w-64 z-10">
-          <span className="fixed ">
+      <main className="justify-center items-start sm:justify-start  flex w-screen xs:w-full p-3 transition-all">
+        {showSortPopup && (
+          <span
+            className="fixed w-screen flex h-screen z-50 -ml-3 -mt-3
+                       items-center justify-center bg-opacity-95
+                     bg-indigo-50"
+          >
+            <SidebarShop categories={categories} />
+          </span>
+        )}
+        <span className="w-0 mr-4 sm:min-w-[250px]  sm:w-64 z-10">
+          <span className="fixed sm:block hidden top-3">
             <SidebarShop categories={categories} />
           </span>
         </span>
-        <section className="flex flex-col justify-center  w-full">
-          <span className="pb-2">
+        <section className="flex flex-col sm:items-start items-center justify-center w-full">
+          <span className="pb-2 flex z-0">
             <Sort />
           </span>
           <Products products={prods} />
