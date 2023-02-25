@@ -1,15 +1,31 @@
 import { NextPage } from 'next'
+import { useLayoutEffect } from 'react'
 import Head from 'next/head'
 import { Sort } from 'UwU/components/OptionsShop'
 import Products from 'UwU/components/itemListShop/products'
 import SidebarShop from 'UwU/components/SidebarShop'
 import { ProductType } from 'UwU/types/products.types'
 import { CallApiGet } from 'UwU/components/Main/main.service'
+import { typedDispatch } from 'UwU/store'
+import { setRenderType } from 'UwU/store/shop.slice'
 
 const Shop: NextPage<{
   prods: ProductType[]
   categories: string[]
 }> = ({ prods, categories }) => {
+  const dispatch = typedDispatch()
+
+  const handleResize = () => {
+    if (window.innerWidth <= 1110) {
+      dispatch(setRenderType('cards'))
+    }
+  }
+
+  useLayoutEffect(() => {
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
   return (
     <>
       <Head>
@@ -31,7 +47,7 @@ const Shop: NextPage<{
           </span>
         </span>
         <section className="flex flex-col justify-center  w-full">
-          <span className="py-2">
+          <span className="pb-2">
             <Sort />
           </span>
           <Products products={prods} />

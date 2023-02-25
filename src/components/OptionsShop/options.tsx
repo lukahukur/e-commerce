@@ -6,9 +6,22 @@ import {
 } from 'react-icons/bs'
 import { typedDispatch, typedUseSelector } from 'UwU/store'
 import { setRenderType, sort } from 'UwU/store/shop.slice'
+import { useEffect, useState } from 'react'
+
 export const Sort = () => {
   const dispatch = typedDispatch()
   const renderType = typedUseSelector((s) => s.shopSlice.renderType)
+  const [width, setWidth] = useState<number | null>()
+
+  const handleResize = () => {
+    setWidth(window.innerWidth)
+  }
+  useEffect(() => {
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
     <>
       <span className="flex justify-start items-center">
@@ -28,6 +41,11 @@ export const Sort = () => {
         </span>
         <span>
           <button
+            style={
+              width! >= 1110
+                ? { display: 'flex' }
+                : { display: 'none' }
+            }
             onClick={() =>
               dispatch(
                 setRenderType(

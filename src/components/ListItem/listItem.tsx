@@ -30,12 +30,19 @@ const ListItem: FC<{ product: ProductType }> = ({ product }) => (
           </h2>
         </Link>
       </span>
-      <span className="flex font-OpenSansBold text-lg items-center justify-between pr-3">
-        <h2>{product.price}$</h2>
-        <span className="flex items-center">
-          <h2>{product.rating.rate}</h2>
-          <BsStar className="ml-2" />
+      <span className="flex items-start justify-between pr-3">
+        <span className="flex flex-col">
+          <h2 className="font-OpenSansBold text-lg">
+            {product.price}$
+          </h2>
+          <span className="flex items-center">
+            <h2 className="text-lg">{product.rating.rate}</h2>
+            <BsStar className="ml-2" />
+          </span>
         </span>
+        <button className="bg-indigo-500 font-Montserrat text-indigo-50 w-20 h-8 rounded-md mt-1">
+          BUY
+        </button>
       </span>
     </span>
   </div>
