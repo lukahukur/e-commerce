@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { useLayoutEffect } from 'react'
+import { useEffect } from 'react'
 import Head from 'next/head'
 import { Sort } from 'UwU/components/OptionsShop'
 import Products from 'UwU/components/productListShop/products'
@@ -8,6 +8,7 @@ import { ProductType } from 'UwU/types/products.types'
 import { CallApiGet } from 'UwU/components/Main/main.service'
 import { typedDispatch, typedUseSelector } from 'UwU/store'
 import { setRenderType } from 'UwU/store/shop.slice'
+import Header from 'UwU/components/Header'
 
 const Shop: NextPage<{
   prods: ProductType[]
@@ -24,7 +25,7 @@ const Shop: NextPage<{
     }
   }
   console.log(showSortPopup)
-  useLayoutEffect(() => {
+  useEffect(() => {
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
@@ -43,6 +44,7 @@ const Shop: NextPage<{
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
       <main className="justify-center items-start sm:justify-start  flex w-screen xs:w-full p-3 transition-all">
         {showSortPopup && (
           <span
@@ -53,8 +55,9 @@ const Shop: NextPage<{
             <SidebarShop categories={categories} />
           </span>
         )}
+
         <span className="w-0 mr-4 sm:min-w-[250px]  sm:w-64 z-10">
-          <span className="fixed sm:block hidden top-3">
+          <span className="fixed sm:block hidden top-15">
             <SidebarShop categories={categories} />
           </span>
         </span>

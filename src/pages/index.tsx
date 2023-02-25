@@ -1,19 +1,8 @@
-import { NextPage } from 'next'
 import Head from 'next/head'
-import { useContext } from 'react'
-import { useQuery } from 'react-query'
+import Header from 'UwU/components/Header'
 import MainBody from 'UwU/components/Main'
-import { CallApiGet } from 'UwU/components/Main/main.service'
-import { ProductType } from 'UwU/types/products.types'
 
-const Home: NextPage<{ prods: ProductType[] }> = ({ prods }) => {
-  const { data, isSuccess, isLoading } = useQuery<ProductType[], any>(
-    'products',
-    () =>
-      CallApiGet<ProductType[]>('https://fakestoreapi.com/products'),
-    { initialData: prods },
-  )
-
+const Home = () => {
   return (
     <>
       <Head>
@@ -28,16 +17,10 @@ const Home: NextPage<{ prods: ProductType[] }> = ({ prods }) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainBody products={data!} />
+      <Header />
+      <MainBody />
     </>
   )
 }
 
 export default Home
-
-export async function getStaticProps() {
-  const prods = await CallApiGet<ProductType[]>(
-    'https://fakestoreapi.com/products',
-  )
-  return { props: { prods } }
-}

@@ -1,16 +1,12 @@
 import { FC } from 'react'
 import { ProductType } from 'UwU/types/products.types'
 import Card from '../Card'
+import Header from '../Header'
 
-const MainBody: FC<{ products: ProductType[] }> = ({
-  products: prod,
-}) => {
-  const products = prod.map((e, i) => {
-    return <Card key={i} product={e} />
-  })
+const MainBody = ({}) => {
   return (
-    <main className="border">
-      <div className="border">{products}</div>
+    <main className="font-OpenSans">
+      <div className="">asdf</div>
     </main>
   )
 }
