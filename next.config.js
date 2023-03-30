@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-
+  redirects: () => [
+    {
+      source: '/',
+      destination: '/shop',
+      permanent: true,
+    },
+  ],
   images: {
     domains: ['fakestoreapi.com'],
     formats: ['image/webp'],

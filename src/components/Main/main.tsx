@@ -6,7 +6,9 @@ import Header from '../Header'
 const MainBody = ({}) => {
   return (
     <main className="font-OpenSans">
-      <div className="">asdf</div>
+      <div className="">
+
+      </div>
     </main>
   )
 }

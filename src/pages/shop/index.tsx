@@ -24,7 +24,7 @@ const Shop: NextPage<{
       dispatch(setRenderType('cards'))
     }
   }
-  console.log(showSortPopup)
+
   useEffect(() => {
     handleResize()
     window.addEventListener('resize', handleResize)

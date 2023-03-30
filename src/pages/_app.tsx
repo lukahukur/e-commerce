@@ -8,7 +8,6 @@ import type { AppProps } from 'next/app'
 import { useState, useLayoutEffect } from 'react'
 import { Provider } from 'react-redux'
 import { typedDispatch, wrapper } from 'UwU/store'
-import { setRenderType } from 'UwU/store/shop.slice'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
