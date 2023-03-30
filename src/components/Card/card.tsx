@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { FC } from 'react'
 import { ProductType } from 'UwU/types/products.types'
 import { BsStar } from 'react-icons/bs'
+
 const Card: FC<{ product: ProductType }> = ({ product }) => (
   <div
     className="flex flex-col justify-between items-center w-80 h-96 
@@ -26,11 +27,10 @@ const Card: FC<{ product: ProductType }> = ({ product }) => (
       />
     </div>
     <div className="bg-indigo-50 flex flex-col justify-between w-full p-3 text-sm">
-      <Link href={'/products/' + product.id}>
-        <h2 className="font-OpenSans  text-base hover:text-indigo-600">
-          {product.title}
-        </h2>
-      </Link>
+      <h2 className="font-OpenSans  text-base hover:text-indigo-600">
+        {product.title}
+      </h2>
+
       <span className="text-lg mt-2  justify-between flex items-center font-OpenSansBold">
         <span>{product.price} $ </span>
         <span className="flex items-center w-12 justify-between ">

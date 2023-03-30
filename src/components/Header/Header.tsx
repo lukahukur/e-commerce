@@ -24,25 +24,25 @@ export default function Header() {
         </h1>
       </div>
       <div className={'w-20  flex'}>
-        <div className={'fixed'}>
-          <nav
-            className=" font-OpenSans text-3xl flex items-center
-                        w-14 h-14 rounded-full bg-white
-                        justify-center text-indigo-500 shadow shadow-lg
-                        "
-          >
-            <Link href={'/cart'}>
-              <FaCartPlus />
-            </Link>
-          </nav>
-          <div
-            className={
-              'rounded-full -top-4 text-neutral-800 font-OpenSansBold flex justify-center items-center bg-red-500 w-5 h-5 relative z-50'
-            }
-          >
-            {getItem()}
-          </div>
-        </div>
+        {/*<div className={'fixed'}>*/}
+        {/*  <nav*/}
+        {/*    className=" font-OpenSans text-3xl flex items-center*/}
+        {/*                w-14 h-14 rounded-full bg-white*/}
+        {/*                justify-center text-indigo-500 shadow shadow-lg*/}
+        {/*                "*/}
+        {/*  >*/}
+        {/*    <Link href={'/cart'}>*/}
+        {/*      <FaCartPlus />*/}
+        {/*    </Link>*/}
+        {/*  </nav>*/}
+        {/*  <div*/}
+        {/*    className={*/}
+        {/*      'rounded-full -top-4 text-neutral-800 font-OpenSansBold flex justify-center items-center bg-red-500 w-5 h-5 relative z-50'*/}
+        {/*    }*/}
+        {/*  >*/}
+        {/*    {getItem()}*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </div>
     </header>
   )
